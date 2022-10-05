@@ -6,6 +6,16 @@ function range(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function debounce(fn: Function, ms: number) {
+  let timer: any;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      fn.apply(null, arguments);
+    }, ms);
+  };
+}
 class Vector {
   x: number;
   y: number;
@@ -138,17 +148,17 @@ const Canvas = (
   });
 
   React.useEffect(() => {
-    function handleResize() {
+    const debouncedHandleResize = debounce(function handleResize() {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
       });
-    }
+    }, 3);
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", debouncedHandleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", debouncedHandleResize);
     };
   });
 
