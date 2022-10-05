@@ -1,9 +1,16 @@
-function Random() {
+interface props {
+  setFunction: Function;
+}
+
+function Random({ setFunction }: props) {
   return (
     <button
       className="bg-blue hover:bg-blue-hover rounded-3xl w-24 h-11
       text-white font-serif font-bold
       mt-8"
+      onClick={() => {
+        setFunction(true);
+      }}
     >
       Random
     </button>
