@@ -68,11 +68,13 @@ const Canvas = (
     React.CanvasHTMLAttributes<HTMLCanvasElement>
 ) => {
   const canvasRef = useRef(null);
+  const width: number = window.innerWidth;
+  const height: number = window.innerHeight;
 
   const agents: Agent[] = [];
-  for (let i = 0; i < 32; i++) {
-    const x = range(0, 1366 as number);
-    const y = range(0, 768 as number);
+  for (let i = 0; i < 100; i++) {
+    const x = range(0, width);
+    const y = range(0, height);
 
     agents.push(new Agent(x, y));
   }
@@ -81,7 +83,7 @@ const Canvas = (
     context: CanvasRenderingContext2D,
     frameCount: number
   ) => {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.clearRect(0, 0, width, height);
 
     for (let i = 0; i < agents.length; i++) {
       const agent = agents[i];
@@ -130,7 +132,15 @@ const Canvas = (
     };
   }, [draw]);
 
-  return <canvas ref={canvasRef} width={1366} height={768} {...props} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      width={window.innerWidth}
+      height={window.innerHeight}
+      className="absolute z-0"
+      {...props}
+    />
+  );
 };
 
 export default Canvas;

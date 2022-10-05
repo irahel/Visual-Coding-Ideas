@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="text-white h-11 flex items-center justify-center mb-8">
+    <footer className="text-white h-11 flex items-center justify-center mb-8 z-50">
       <div className="flex justify-between items-center">
         <h2 className="text-4xl font-extrabold font-serif">
           RAHEL
