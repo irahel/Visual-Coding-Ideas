@@ -1,4 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import * as Popover from "@radix-ui/react-popover";
+import { Faders } from "phosphor-react";
+import Random from "./Random";
+import * as Toast from "@radix-ui/react-toast";
 
 function range(min: number, max: number): number {
   min = Math.ceil(min);
@@ -81,18 +85,33 @@ const Canvas = (
   const width: number = window.innerWidth;
   const height: number = window.innerHeight;
 
+  const [numberOfStates, setNumberOfStates] = useState(350);
+  const handleSetNumberOfStates = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (valueNumber > 2000) {
+      setNumberOfStates(2000);
+      event.target.value = "2000";
+      alert("Maximum number of agents reached");
+    } else if (valueNumber < 0) {
+      setNumberOfStates(0);
+      event.target.value = "0";
+      alert("Minimum number of agents reached");
+    } else {
+      setNumberOfStates(valueNumber);
+    }
+  };
+
   const agents: Agent[] = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < numberOfStates; i++) {
     const x = range(0, width);
     const y = range(0, height);
 
     agents.push(new Agent(x, y));
   }
 
-  const draw: Function = (
-    context: CanvasRenderingContext2D,
-    frameCount: number
-  ) => {
+  const draw: Function = (context: CanvasRenderingContext2D) => {
     context.clearRect(0, 0, width, height);
 
     for (let i = 0; i < agents.length; i++) {
@@ -127,12 +146,10 @@ const Canvas = (
     if (canvas == null) return;
     const context = (canvas as HTMLCanvasElement).getContext("2d");
 
-    let frameCount = 0;
     let animationFrameId: number;
 
     const render = () => {
-      frameCount++;
-      (draw as unknown as Function)(context, frameCount);
+      (draw as unknown as Function)(context);
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
@@ -163,13 +180,63 @@ const Canvas = (
   });
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-      className="absolute z-0"
-      {...props}
-    />
+    <>
+      <div className="flex flex-row gap-2 z-50 mt-8">
+        <Random setFunction={() => {}} />
+        <div className="flex flex-col items-center">
+          <Popover.Root>
+            <Popover.Trigger
+              className="bg-blue rounded-full
+              flex w-11 h-11 items-center justify-center
+              hover:bg-blue-hover"
+            >
+              <Faders className="" color="#10101A" size={22} />
+            </Popover.Trigger>
+
+            <Popover.Anchor />
+            <Popover.Portal>
+              <Popover.Content
+                className="bg-blue opacity-80 rounded-3xl
+                  min-h-[100px]
+                  min-w-[200px]
+                  border-2
+                  border-t-0
+                  border-opacity-80
+                  border-white
+                  flex flex-col items-center justify-center"
+              >
+                <Popover.Arrow className="fill-blue w-4 h-2" />
+                <div className="my-2 gap-2">
+                  <div className="flex items-center w-full justify-center ">
+                    <label
+                      className="text-dark font-serif font-semibold text-center"
+                      htmlFor="nagents"
+                    >
+                      Agents:
+                    </label>
+                    <input
+                      className="rounded-3xl text-center w-1/2 ml-2 bg-dark text-white"
+                      id="nagents"
+                      type="number"
+                      step={25}
+                      onChange={handleSetNumberOfStates}
+                      defaultValue={numberOfStates}
+                    />
+                  </div>
+                </div>
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
+        </div>
+      </div>
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        className="absolute z-0"
+        {...props}
+      />
+    </>
   );
 };
 
