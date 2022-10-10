@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { Faders } from "phosphor-react";
 import Random from "./Random";
-import * as Toast from "@radix-ui/react-toast";
 
 function range(min: number, max: number): number {
   min = Math.ceil(min);
@@ -90,17 +89,8 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
-    if (valueNumber > 2000) {
-      setNumberOfStates(2000);
-      event.target.value = "2000";
-      alert("Maximum number of agents reached");
-    } else if (valueNumber < 0) {
-      setNumberOfStates(0);
-      event.target.value = "0";
-      alert("Minimum number of agents reached");
-    } else {
-      setNumberOfStates(valueNumber);
-    }
+
+    setNumberOfStates(valueNumber);
   };
 
   const agents: Agent[] = [];
@@ -218,7 +208,9 @@ const Canvas = (
                       className="rounded-3xl text-center w-1/2 ml-2 bg-dark text-white"
                       id="nagents"
                       type="number"
-                      step={25}
+                      step={10}
+                      min={0}
+                      max={2000}
                       onChange={handleSetNumberOfStates}
                       defaultValue={numberOfStates}
                     />
