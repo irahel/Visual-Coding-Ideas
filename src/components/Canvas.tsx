@@ -89,8 +89,17 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
-
-    setNumberOfStates(valueNumber);
+    if (valueNumber > 2000) {
+      setNumberOfStates(2000);
+      event.target.value = "2000";
+      alert("Maximum number of agents reached");
+    } else if (valueNumber < 0) {
+      setNumberOfStates(0);
+      event.target.value = "0";
+      alert("Minimum number of agents reached");
+    } else {
+      setNumberOfStates(valueNumber);
+    }
   };
 
   const agents: Agent[] = [];
