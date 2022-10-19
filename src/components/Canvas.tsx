@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { Faders } from "phosphor-react";
+import { Faders, Minus, Plus } from "phosphor-react";
 import Random from "./Random";
 
 function range(min: number, max: number): number {
@@ -85,6 +85,8 @@ const Canvas = (
   const height: number = window.innerHeight;
 
   const [numberOfStates, setNumberOfStates] = useState(350);
+  const [numberOfStatesSignal, setNumberOfStatesSignal] = useState(-1);
+
   const handleSetNumberOfStates = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -96,6 +98,21 @@ const Canvas = (
     } else if (valueNumber < 0) {
       setNumberOfStates(0);
       event.target.value = "0";
+      alert("Minimum number of agents reached");
+    } else {
+      setNumberOfStates(valueNumber);
+    }
+  };
+
+  const handleButtonNumberOfStates = (event: any) => {
+    const btnNumber: number = parseInt(event.target.innerText);
+    const valueNumber: number =
+      numberOfStates + btnNumber * numberOfStatesSignal;
+    if (valueNumber > 2000) {
+      setNumberOfStates(2000);
+      alert("Maximum number of agents reached");
+    } else if (valueNumber < 0) {
+      setNumberOfStates(0);
       alert("Minimum number of agents reached");
     } else {
       setNumberOfStates(valueNumber);
@@ -196,8 +213,8 @@ const Canvas = (
             <Popover.Portal>
               <Popover.Content
                 className="bg-blue opacity-80 rounded-3xl
-                  min-h-[100px]
-                  min-w-[200px]
+                  py-8
+                  px-10
                   border-2
                   border-t-0
                   border-opacity-80
@@ -205,24 +222,81 @@ const Canvas = (
                   flex flex-col items-center justify-center"
               >
                 <Popover.Arrow className="fill-blue w-4 h-2" />
-                <div className="my-2 gap-2">
-                  <div className="flex items-center w-full justify-center ">
-                    <label
-                      className="text-dark font-serif font-semibold text-center"
-                      htmlFor="nagents"
-                    >
-                      Agents:
-                    </label>
-                    <input
-                      className="rounded-3xl text-center w-1/2 ml-2 bg-dark text-white"
-                      id="nagents"
-                      type="number"
-                      step={10}
-                      min={0}
-                      max={2000}
-                      onChange={handleSetNumberOfStates}
-                      defaultValue={numberOfStates}
-                    />
+                <div>
+                  <div className="flex flex-col">
+                    <div className="flex flew-row">
+                      <label
+                        className="text-dark font-serif font-semibold flex"
+                        htmlFor="nagents"
+                      >
+                        Agents:
+                      </label>
+                      <input
+                        className="rounded-3xl text-center bg-dark text-white w-full flex ml-2"
+                        id="nagents"
+                        type="number"
+                        step={10}
+                        value={numberOfStates}
+                        min={0}
+                        max={2000}
+                        onChange={handleSetNumberOfStates}
+                        defaultValue={numberOfStates}
+                      />
+                    </div>
+                    <div className="flex flex-row gap-2 mt-2 items-center justify-center w-full">
+                      <button
+                        id="numberOfStatesSignalBtn"
+                        onClick={() => {
+                          setNumberOfStatesSignal(numberOfStatesSignal * -1);
+                        }}
+                        className={`rounded-lg bg-blue  text-lg font-serif font-bold
+                    border-2 border-dashed flex items-center justify-center py-1 px-2
+                    ${
+                      numberOfStatesSignal > 0
+                        ? "text-green-900 border-green-900"
+                        : "text-red-900 border-red-900"
+                    }`}
+                      >
+                        {numberOfStatesSignal > 0 ? (
+                          <Plus
+                            size={18}
+                            color={` ${
+                              numberOfStatesSignal > 0 ? "#14532d" : "#7f1d1d"
+                            }`}
+                            weight="bold"
+                          />
+                        ) : (
+                          <Minus
+                            size={18}
+                            color={` ${
+                              numberOfStatesSignal > 0 ? "#14532d" : "#7f1d1d"
+                            }`}
+                            weight="bold"
+                          />
+                        )}
+                      </button>
+                      <button
+                        className="rounded-lg bg-blue text-dark text-sm font-serif font-bold
+                    border-2 border-dark flex items-center justify-center py-1 px-2"
+                        onClick={handleButtonNumberOfStates}
+                      >
+                        50
+                      </button>
+                      <button
+                        className="rounded-lg bg-blue text-dark text-sm font-serif font-bold
+                    border-2 border-dark flex items-center justify-center py-1 px-2"
+                        onClick={handleButtonNumberOfStates}
+                      >
+                        100
+                      </button>
+                      <button
+                        className="rounded-lg bg-blue text-dark text-sm font-serif font-bold
+                    border-2 border-dark flex items-center justify-center py-1 px-2"
+                        onClick={handleButtonNumberOfStates}
+                      >
+                        500
+                      </button>
+                    </div>
                   </div>
                 </div>
               </Popover.Content>
