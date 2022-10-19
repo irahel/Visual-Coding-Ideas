@@ -1,6 +1,6 @@
 import Footer from "./components/Footer";
 import "./index.css";
-import Canvas from "./components/Canvas";
+import Canvas from "./components/sketchs/graphs/Canvas";
 
 function App() {
   return (
