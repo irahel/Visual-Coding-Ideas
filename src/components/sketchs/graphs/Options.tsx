@@ -14,6 +14,13 @@ interface OptionsProps {
   //distanceToConnect
   distanceToConnect: number;
   handleSetDistanceToConnect: ChangeEventHandler<HTMLInputElement>;
+
+  //Speed
+  speedX: number;
+  handleSetSpeedX: ChangeEventHandler<HTMLInputElement>;
+
+  speedY: number;
+  handleSetSpeedY: ChangeEventHandler<HTMLInputElement>;
 }
 
 function Options({
@@ -25,6 +32,11 @@ function Options({
 
   distanceToConnect,
   handleSetDistanceToConnect,
+
+  speedX,
+  handleSetSpeedX,
+  speedY,
+  handleSetSpeedY,
 }: OptionsProps) {
   return (
     <div className="flex flex-col items-center">
@@ -136,6 +148,58 @@ function Options({
                     onChange={handleSetDistanceToConnect}
                     defaultValue={distanceToConnect}
                   />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <label
+                  className="text-dark font-serif font-semibold self-center"
+                  htmlFor="speed"
+                >
+                  Agent velocity:
+                </label>
+                <div className="flex flex-row items-center justify-around">
+                  <div className="flex flex-row gap-4 mt-1 justify-around">
+                    <div className="flex flew-row items-center justify-center gap-1">
+                      <label
+                        className="text-dark font-serif font-semibold"
+                        htmlFor="speedx"
+                      >
+                        X:
+                      </label>
+                      <input
+                        className="rounded-3xl text-center bg-dark text-white w-full"
+                        id="nspeedx"
+                        type="number"
+                        step={1}
+                        value={speedX}
+                        min={0}
+                        max={50}
+                        onChange={handleSetSpeedX}
+                        defaultValue={speedX}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-4 mt-1 justify-around">
+                    <div className="flex flew-row items-center justify-center gap-1">
+                      <label
+                        className="text-dark font-serif font-semibold"
+                        htmlFor="speedy"
+                      >
+                        Y:
+                      </label>
+                      <input
+                        className="rounded-3xl text-center bg-dark text-white w-full"
+                        id="nspeedx"
+                        type="number"
+                        step={1}
+                        value={speedY}
+                        min={0}
+                        max={50}
+                        onChange={handleSetSpeedY}
+                        defaultValue={speedY}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

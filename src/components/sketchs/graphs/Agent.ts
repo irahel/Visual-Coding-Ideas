@@ -6,9 +6,9 @@ export class Agent {
     speed: Vector;
     radius: number;
     color: string;
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, speedX: number, speedY: number,) {
       this.pos = new Vector(x, y);
-      this.speed = new Vector(range(-1, 1), range(-1, 1));
+      this.speed = new Vector(range(-1, 1)*speedX, range(-1, 1)*speedY);
       this.radius = range(1, 2);
       this.color = `rgba(164 194 244, 1)`;
     }

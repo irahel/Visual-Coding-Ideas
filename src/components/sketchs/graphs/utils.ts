@@ -12,14 +12,14 @@ export function debounce(fn: Function, ms: number) {
     };
   }
 
-export function populateAgents(numberOfStates: number, width: number, height: number): Agent[]{
+export function populateAgents(numberOfStates: number, width: number, height: number, speedX: number, speedY: number): Agent[]{
   const agents: Agent[] = [];
 
   for (let i = 0; i < numberOfStates; i++) {
     const x = range(0, width);
     const y = range(0, height);
 
-    agents.push(new Agent(x, y));
+    agents.push(new Agent(x, y, speedX, speedY));
   }
 
   return agents;

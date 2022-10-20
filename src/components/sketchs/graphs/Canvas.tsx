@@ -17,9 +17,14 @@ const Canvas = (
   //params
   const [numberOfStates, setNumberOfStates] = useState(350);
   const [numberOfStatesSignal, setNumberOfStatesSignal] = useState(1);
+  const maxNumberOfStates = 2000;
 
   const [distanceToConnection, setDistanceToConnection] = useState(66);
   const maxDistanceToConnection = maxB2N(width, height);
+
+  const [speedX, setSpeedX] = useState(1);
+  const [speedY, setSpeedY] = useState(1);
+  const limitOfSpeed = 50;
 
   //handlers for params
   const handleSetNumberOfStates = (
@@ -31,9 +36,9 @@ const Canvas = (
       event.target.value = "0";
       return;
     }
-    if (valueNumber > 2000) {
-      setNumberOfStates(2000);
-      event.target.value = "2000";
+    if (valueNumber > maxNumberOfStates) {
+      setNumberOfStates(maxNumberOfStates);
+      event.target.value = maxNumberOfStates.toString();
       alert("Maximum number of agents reached");
     } else if (valueNumber < 0) {
       setNumberOfStates(0);
@@ -50,11 +55,13 @@ const Canvas = (
     console.log("Pegou o " + btnNumber);
     const valueNumber: number =
       numberOfStates + btnNumber * numberOfStatesSignal;
-    if (valueNumber > 2000) {
-      setNumberOfStates(2000);
+    if (valueNumber > maxNumberOfStates) {
+      setNumberOfStates(maxNumberOfStates);
+      event.target.value = maxNumberOfStates.toString();
       alert("Maximum number of agents reached");
     } else if (valueNumber < 0) {
       setNumberOfStates(0);
+      event.target.value = "0";
       alert("Minimum number of agents reached");
     } else {
       setNumberOfStates(valueNumber);
@@ -84,7 +91,49 @@ const Canvas = (
     }
   };
 
-  const agents = populateAgents(numberOfStates, width, height);
+  const handleSetSpeedX = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (isNaN(valueNumber)) {
+      setSpeedX(0);
+      event.target.value = "0";
+      return;
+    }
+    if (valueNumber > limitOfSpeed) {
+      setSpeedX(limitOfSpeed);
+      event.target.value = limitOfSpeed.toString();
+      alert("Maximum velocity reached");
+    } else if (valueNumber < 0) {
+      setSpeedX(0);
+      event.target.value = "0";
+      alert("Minimum velocity reached");
+    } else {
+      setSpeedX(valueNumber);
+      event.target.value = valueNumber.toString();
+    }
+  };
+
+  const handleSetSpeedY = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (isNaN(valueNumber)) {
+      setSpeedY(0);
+      event.target.value = "0";
+      return;
+    }
+    if (valueNumber > limitOfSpeed) {
+      setSpeedY(limitOfSpeed);
+      event.target.value = limitOfSpeed.toString();
+      alert("Maximum velocity reached");
+    } else if (valueNumber < 0) {
+      setSpeedY(0);
+      event.target.value = "0";
+      alert("Minimum velocity reached");
+    } else {
+      setSpeedY(valueNumber);
+      event.target.value = valueNumber.toString();
+    }
+  };
+
+  const agents = populateAgents(numberOfStates, width, height, speedX, speedY);
 
   const draw: Function = (context: CanvasRenderingContext2D) => {
     context.clearRect(0, 0, width, height);
@@ -166,6 +215,10 @@ const Canvas = (
           setNumberOfStatesSignal={setNumberOfStatesSignal}
           distanceToConnect={distanceToConnection}
           handleSetDistanceToConnect={handleSetDistanceToConnect}
+          speedX={speedX}
+          handleSetSpeedX={handleSetSpeedX}
+          speedY={speedY}
+          handleSetSpeedY={handleSetSpeedY}
         />
       </div>
       <canvas
