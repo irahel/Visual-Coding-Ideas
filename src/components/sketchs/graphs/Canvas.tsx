@@ -13,9 +13,13 @@ const Canvas = (
   const width: number = window.innerWidth;
   const height: number = window.innerHeight;
 
+  //params
   const [numberOfStates, setNumberOfStates] = useState(350);
   const [numberOfStatesSignal, setNumberOfStatesSignal] = useState(1);
 
+  const [distanceToConnection, setDistanceToConnection] = useState(66);
+
+  //handlers for params
   const handleSetNumberOfStates = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -49,6 +53,23 @@ const Canvas = (
     }
   };
 
+  const handleSetDistanceToConnect = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (valueNumber > 200) {
+      setDistanceToConnection(200);
+      event.target.value = "200";
+      alert("Maximum distance to connect reached");
+    } else if (valueNumber < 0) {
+      setDistanceToConnection(0);
+      event.target.value = "0";
+      alert("Minimum distance to connect reached");
+    } else {
+      setDistanceToConnection(valueNumber);
+    }
+  };
+
   const agents = populateAgents(numberOfStates, width, height);
 
   const draw: Function = (context: CanvasRenderingContext2D) => {
@@ -62,7 +83,7 @@ const Canvas = (
 
         const dist = agent.pos.getDistance(other.pos);
 
-        if (dist > 66) continue;
+        if (dist > distanceToConnection) continue;
 
         context.strokeStyle = "#a4c2f4";
         context.fillStyle = "#f7f7f7";
@@ -129,6 +150,8 @@ const Canvas = (
           handleButtonNumberOfStates={handleButtonNumberOfStates}
           numberOfStatesSignal={numberOfStatesSignal}
           setNumberOfStatesSignal={setNumberOfStatesSignal}
+          distanceToConnect={distanceToConnection}
+          handleSetDistanceToConnect={handleSetDistanceToConnect}
         />
       </div>
       <canvas

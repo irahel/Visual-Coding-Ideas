@@ -4,13 +4,16 @@ import { ChangeEventHandler, MouseEventHandler } from "react";
 import ButtonOptions from "./ButtonOptions";
 
 interface OptionsProps {
+  //agents
   numberOfStates: number;
-
   handleSetNumberOfStates: ChangeEventHandler<HTMLInputElement>;
   handleButtonNumberOfStates: MouseEventHandler<HTMLButtonElement>;
-
   numberOfStatesSignal: number;
   setNumberOfStatesSignal: Function;
+
+  //distanceToConnect
+  distanceToConnect: number;
+  handleSetDistanceToConnect: ChangeEventHandler<HTMLInputElement>;
 }
 
 function Options({
@@ -19,6 +22,9 @@ function Options({
   handleButtonNumberOfStates,
   numberOfStatesSignal,
   setNumberOfStatesSignal,
+
+  distanceToConnect,
+  handleSetDistanceToConnect,
 }: OptionsProps) {
   return (
     <div className="flex flex-col items-center">
@@ -44,7 +50,7 @@ function Options({
                   flex flex-col items-center justify-center"
           >
             <Popover.Arrow className="fill-blue w-4 h-2" />
-            <div>
+            <div className="gap-4 flex flex-col">
               <div className="flex flex-col">
                 <div className="flex flew-row">
                   <label
@@ -108,6 +114,27 @@ function Options({
                   <ButtonOptions
                     text={"500"}
                     handleButtonNumberOfStates={handleButtonNumberOfStates}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex flew-row">
+                  <label
+                    className="text-dark font-serif font-semibold flex"
+                    htmlFor="distanceToConnect"
+                  >
+                    Distance to connect:
+                  </label>
+                  <input
+                    className="rounded-3xl text-center bg-dark text-white w-full flex ml-2"
+                    id="ndistanceToConnect"
+                    type="number"
+                    step={1}
+                    value={distanceToConnect}
+                    min={0}
+                    max={200}
+                    onChange={handleSetDistanceToConnect}
+                    defaultValue={distanceToConnect}
                   />
                 </div>
               </div>
