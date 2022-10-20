@@ -41,6 +41,7 @@ const Canvas = (
       alert("Minimum number of agents reached");
     } else {
       setNumberOfStates(valueNumber);
+      event.target.value = valueNumber.toString();
     }
   };
 
@@ -79,6 +80,7 @@ const Canvas = (
       alert("Minimum distance to connect reached");
     } else {
       setDistanceToConnection(valueNumber);
+      event.target.value = valueNumber.toString();
     }
   };
 
