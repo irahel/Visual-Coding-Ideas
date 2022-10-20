@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Random from "../../Random";
 import { debounce, populateAgents } from "./utils";
 import Options from "./Options";
+import { maxB2N } from "../../utils";
 
 const Canvas = (
   props: JSX.IntrinsicAttributes &
@@ -18,6 +19,7 @@ const Canvas = (
   const [numberOfStatesSignal, setNumberOfStatesSignal] = useState(1);
 
   const [distanceToConnection, setDistanceToConnection] = useState(66);
+  const maxDistanceToConnection = maxB2N(width, height);
 
   //handlers for params
   const handleSetNumberOfStates = (
@@ -57,9 +59,9 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
-    if (valueNumber > 200) {
-      setDistanceToConnection(200);
-      event.target.value = "200";
+    if (valueNumber > maxDistanceToConnection) {
+      setDistanceToConnection(maxDistanceToConnection);
+      event.target.value = maxDistanceToConnection.toString();
       alert("Maximum distance to connect reached");
     } else if (valueNumber < 0) {
       setDistanceToConnection(0);
