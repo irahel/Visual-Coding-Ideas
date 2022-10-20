@@ -59,6 +59,12 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
+    console.log(valueNumber);
+    if (isNaN(valueNumber)) {
+      setDistanceToConnection(0);
+      event.target.value = "0";
+      return;
+    }
     if (valueNumber > maxDistanceToConnection) {
       setDistanceToConnection(maxDistanceToConnection);
       event.target.value = maxDistanceToConnection.toString();
