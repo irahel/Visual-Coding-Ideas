@@ -26,6 +26,11 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
+    if (isNaN(valueNumber)) {
+      setNumberOfStates(0);
+      event.target.value = "0";
+      return;
+    }
     if (valueNumber > 2000) {
       setNumberOfStates(2000);
       event.target.value = "2000";
@@ -59,7 +64,6 @@ const Canvas = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const valueNumber: number = parseInt(event.target.value);
-    console.log(valueNumber);
     if (isNaN(valueNumber)) {
       setDistanceToConnection(0);
       event.target.value = "0";
