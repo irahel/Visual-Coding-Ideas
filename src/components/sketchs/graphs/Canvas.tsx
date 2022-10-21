@@ -14,6 +14,16 @@ const Canvas = (
   const width: number = window.innerWidth;
   const height: number = window.innerHeight;
 
+  const defaultValues = {
+    numberOfStates: 350,
+    numberOfStatesSignal: 1,
+    distanceToConnection: 66,
+    speedX: 1,
+    speedY: 1,
+    size: 1,
+    lineSize: 1,
+  };
+
   //params
   const [numberOfStates, setNumberOfStates] = useState(350);
   const [numberOfStatesSignal, setNumberOfStatesSignal] = useState(1);
@@ -181,6 +191,16 @@ const Canvas = (
     }
   };
 
+  const setDefaultValues = () => {
+    setNumberOfStates(defaultValues.numberOfStates);
+    setNumberOfStatesSignal(defaultValues.numberOfStatesSignal);
+    setDistanceToConnection(defaultValues.distanceToConnection);
+    setSpeedX(defaultValues.speedX);
+    setSpeedY(defaultValues.speedY);
+    setSize(defaultValues.size);
+    setLineSize(defaultValues.lineSize);
+  };
+
   const agents = populateAgents(
     numberOfStates,
     width,
@@ -278,6 +298,7 @@ const Canvas = (
           handleSetSize={handleSetSize}
           lineSize={lineSize}
           handleSetLineSize={handleSetLineSize}
+          setDefaultValues={setDefaultValues}
         />
       </div>
       <canvas

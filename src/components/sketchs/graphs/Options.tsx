@@ -1,6 +1,6 @@
 import * as Popover from "@radix-ui/react-popover";
 import { Faders, Minus, Plus } from "phosphor-react";
-import { ChangeEventHandler, MouseEventHandler } from "react";
+import { ChangeEventHandler, MouseEvent, MouseEventHandler } from "react";
 import ButtonOptions from "./ButtonOptions";
 
 interface OptionsProps {
@@ -26,6 +26,9 @@ interface OptionsProps {
   handleSetSize: ChangeEventHandler<HTMLInputElement>;
   lineSize: number;
   handleSetLineSize: ChangeEventHandler<HTMLInputElement>;
+
+  //Default values
+  setDefaultValues: MouseEventHandler<HTMLButtonElement>;
 }
 
 function Options({
@@ -47,6 +50,8 @@ function Options({
   handleSetSize,
   lineSize,
   handleSetLineSize,
+
+  setDefaultValues,
 }: OptionsProps) {
   return (
     <div className="flex flex-col items-center">
@@ -250,6 +255,10 @@ function Options({
                   defaultValue={lineSize}
                 />
               </div>
+              <ButtonOptions
+                text={"Reset"}
+                handleButtonNumberOfStates={setDefaultValues}
+              />
             </div>
           </Popover.Content>
         </Popover.Portal>
