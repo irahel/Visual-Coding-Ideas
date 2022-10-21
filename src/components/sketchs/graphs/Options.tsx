@@ -18,9 +18,14 @@ interface OptionsProps {
   //Speed
   speedX: number;
   handleSetSpeedX: ChangeEventHandler<HTMLInputElement>;
-
   speedY: number;
   handleSetSpeedY: ChangeEventHandler<HTMLInputElement>;
+
+  //Size
+  size: number;
+  handleSetSize: ChangeEventHandler<HTMLInputElement>;
+  lineSize: number;
+  handleSetLineSize: ChangeEventHandler<HTMLInputElement>;
 }
 
 function Options({
@@ -37,6 +42,11 @@ function Options({
   handleSetSpeedX,
   speedY,
   handleSetSpeedY,
+
+  size,
+  handleSetSize,
+  lineSize,
+  handleSetLineSize,
 }: OptionsProps) {
   return (
     <div className="flex flex-col items-center">
@@ -150,15 +160,15 @@ function Options({
                   />
                 </div>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-row gap-3 items-center justify-center">
                 <label
                   className="text-dark font-serif font-semibold self-center"
                   htmlFor="speed"
                 >
                   Agent velocity:
                 </label>
-                <div className="flex flex-row items-center justify-around">
-                  <div className="flex flex-row gap-4 mt-1 justify-around">
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <div className="flex flex-row gap-4 mt-1 justify-center items-center">
                     <div className="flex flew-row items-center justify-center gap-1">
                       <label
                         className="text-dark font-serif font-semibold"
@@ -201,6 +211,44 @@ function Options({
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="flex flew-row">
+                <label
+                  className="text-dark font-serif font-semibold flex"
+                  htmlFor="nsize"
+                >
+                  Agent size:
+                </label>
+                <input
+                  className="rounded-3xl text-center bg-dark text-white w-full flex ml-2"
+                  id="nsize"
+                  type="number"
+                  step={1}
+                  value={size}
+                  min={0}
+                  max={30}
+                  onChange={handleSetSize}
+                  defaultValue={size}
+                />
+              </div>
+              <div className="flex flew-row">
+                <label
+                  className="text-dark font-serif font-semibold flex"
+                  htmlFor="nlinesize"
+                >
+                  Line size:
+                </label>
+                <input
+                  className="rounded-3xl text-center bg-dark text-white w-full flex ml-2"
+                  id="nlinesize"
+                  type="number"
+                  step={1}
+                  value={lineSize}
+                  min={1}
+                  max={10}
+                  onChange={handleSetLineSize}
+                  defaultValue={lineSize}
+                />
               </div>
             </div>
           </Popover.Content>

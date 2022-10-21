@@ -10,16 +10,16 @@ export function debounce(fn: Function, ms: number) {
         fn.apply(null, arguments);
       }, ms);
     };
-  }
+}
 
-export function populateAgents(numberOfStates: number, width: number, height: number, speedX: number, speedY: number): Agent[]{
+export function populateAgents(numberOfStates: number, width: number, height: number, speedX: number, speedY: number, size: number): Agent[]{
   const agents: Agent[] = [];
 
   for (let i = 0; i < numberOfStates; i++) {
     const x = range(0, width);
     const y = range(0, height);
 
-    agents.push(new Agent(x, y, speedX, speedY));
+    agents.push(new Agent(x, y, speedX, speedY, size));
   }
 
   return agents;

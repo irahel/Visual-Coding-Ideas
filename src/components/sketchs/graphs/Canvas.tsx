@@ -26,6 +26,12 @@ const Canvas = (
   const [speedY, setSpeedY] = useState(1);
   const limitOfSpeed = 50;
 
+  const [size, setSize] = useState(1);
+  const maxSize = 30;
+
+  const [lineSize, setLineSize] = useState(1);
+  const maxLineSize = 10;
+
   //handlers for params
   const handleSetNumberOfStates = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -133,7 +139,56 @@ const Canvas = (
     }
   };
 
-  const agents = populateAgents(numberOfStates, width, height, speedX, speedY);
+  const handleSetSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (isNaN(valueNumber)) {
+      setSize(0);
+      event.target.value = "0";
+      return;
+    }
+    if (valueNumber > maxSize) {
+      setSize(maxSize);
+      event.target.value = maxSize.toString();
+      alert("Maximum size reached");
+    } else if (valueNumber < 0) {
+      setSize(0);
+      event.target.value = "0";
+      alert("Minimum size reached");
+    } else {
+      setSize(valueNumber);
+      event.target.value = valueNumber.toString();
+    }
+  };
+
+  const handleSetLineSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const valueNumber: number = parseInt(event.target.value);
+    if (isNaN(valueNumber)) {
+      setLineSize(1);
+      event.target.value = "1";
+      return;
+    }
+    if (valueNumber > maxLineSize) {
+      setLineSize(maxLineSize);
+      event.target.value = maxLineSize.toString();
+      alert("Maximum line size reached");
+    } else if (valueNumber < 1) {
+      setLineSize(1);
+      event.target.value = "1";
+      alert("Minimum line size reached");
+    } else {
+      setLineSize(valueNumber);
+      event.target.value = valueNumber.toString();
+    }
+  };
+
+  const agents = populateAgents(
+    numberOfStates,
+    width,
+    height,
+    speedX,
+    speedY,
+    size
+  );
 
   const draw: Function = (context: CanvasRenderingContext2D) => {
     context.clearRect(0, 0, width, height);
@@ -150,7 +205,7 @@ const Canvas = (
 
         context.strokeStyle = "#a4c2f4";
         context.fillStyle = "#f7f7f7";
-
+        context.lineWidth = lineSize;
         context.beginPath();
         context.moveTo(agent.pos.x, agent.pos.y);
         context.lineTo(other.pos.x, other.pos.y);
@@ -219,6 +274,10 @@ const Canvas = (
           handleSetSpeedX={handleSetSpeedX}
           speedY={speedY}
           handleSetSpeedY={handleSetSpeedY}
+          size={size}
+          handleSetSize={handleSetSize}
+          lineSize={lineSize}
+          handleSetLineSize={handleSetLineSize}
         />
       </div>
       <canvas
