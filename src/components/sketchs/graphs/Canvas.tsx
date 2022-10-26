@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import Random from "../../Random";
-import { debounce, populateAgents } from "./utils";
+import { debounce, handlerSetState, populateAgents } from "./utils";
 import Options from "./Options";
 import { maxB2N } from "../../utils";
 
@@ -46,24 +46,7 @@ const Canvas = (
   const handleSetNumberOfStates = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setNumberOfStates(0);
-      event.target.value = "0";
-      return;
-    }
-    if (valueNumber > maxNumberOfStates) {
-      setNumberOfStates(maxNumberOfStates);
-      event.target.value = maxNumberOfStates.toString();
-      alert("Maximum number of agents reached");
-    } else if (valueNumber < 0) {
-      setNumberOfStates(0);
-      event.target.value = "0";
-      alert("Minimum number of agents reached");
-    } else {
-      setNumberOfStates(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setNumberOfStates, maxNumberOfStates, 0);
   };
 
   const handleButtonNumberOfStates = (event: any) => {
@@ -87,108 +70,23 @@ const Canvas = (
   const handleSetDistanceToConnect = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setDistanceToConnection(0);
-      event.target.value = "0";
-      return;
-    }
-    if (valueNumber > maxDistanceToConnection) {
-      setDistanceToConnection(maxDistanceToConnection);
-      event.target.value = maxDistanceToConnection.toString();
-      alert("Maximum distance to connect reached");
-    } else if (valueNumber < 0) {
-      setDistanceToConnection(0);
-      event.target.value = "0";
-      alert("Minimum distance to connect reached");
-    } else {
-      setDistanceToConnection(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setDistanceToConnection, maxDistanceToConnection, 0);
   };
 
   const handleSetSpeedX = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setSpeedX(0);
-      event.target.value = "0";
-      return;
-    }
-    if (valueNumber > limitOfSpeed) {
-      setSpeedX(limitOfSpeed);
-      event.target.value = limitOfSpeed.toString();
-      alert("Maximum velocity reached");
-    } else if (valueNumber < 0) {
-      setSpeedX(0);
-      event.target.value = "0";
-      alert("Minimum velocity reached");
-    } else {
-      setSpeedX(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setSpeedX, limitOfSpeed, 0);
   };
 
   const handleSetSpeedY = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setSpeedY(0);
-      event.target.value = "0";
-      return;
-    }
-    if (valueNumber > limitOfSpeed) {
-      setSpeedY(limitOfSpeed);
-      event.target.value = limitOfSpeed.toString();
-      alert("Maximum velocity reached");
-    } else if (valueNumber < 0) {
-      setSpeedY(0);
-      event.target.value = "0";
-      alert("Minimum velocity reached");
-    } else {
-      setSpeedY(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setSpeedY, limitOfSpeed, 0);
   };
 
   const handleSetSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setSize(0);
-      event.target.value = "0";
-      return;
-    }
-    if (valueNumber > maxSize) {
-      setSize(maxSize);
-      event.target.value = maxSize.toString();
-      alert("Maximum size reached");
-    } else if (valueNumber < 0) {
-      setSize(0);
-      event.target.value = "0";
-      alert("Minimum size reached");
-    } else {
-      setSize(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setSize, maxSize, 0);
   };
 
   const handleSetLineSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valueNumber: number = parseInt(event.target.value);
-    if (isNaN(valueNumber)) {
-      setLineSize(1);
-      event.target.value = "1";
-      return;
-    }
-    if (valueNumber > maxLineSize) {
-      setLineSize(maxLineSize);
-      event.target.value = maxLineSize.toString();
-      alert("Maximum line size reached");
-    } else if (valueNumber < 1) {
-      setLineSize(1);
-      event.target.value = "1";
-      alert("Minimum line size reached");
-    } else {
-      setLineSize(valueNumber);
-      event.target.value = valueNumber.toString();
-    }
+    handlerSetState(event, setLineSize, maxLineSize, 1);
   };
 
   const setDefaultValues = () => {

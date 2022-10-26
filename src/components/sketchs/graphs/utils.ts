@@ -24,3 +24,25 @@ export function populateAgents(numberOfStates: number, width: number, height: nu
 
   return agents;
 }
+
+export const handlerSetState = (
+  event: React.ChangeEvent<HTMLInputElement>,
+  setState: Function,
+  max: number,
+  min: number
+) => {
+  let value: number = parseInt(event.target.value);
+  value = isNaN(value)? min :
+            value > max ? max :
+              value < min ? min : value;
+  applyState(event, setState, value);
+};
+
+const applyState = (
+  event: React.ChangeEvent<HTMLInputElement>,
+  setState: Function,
+  value: number
+  ) => {
+    setState(value);
+    event.target.value = value.toString();
+}

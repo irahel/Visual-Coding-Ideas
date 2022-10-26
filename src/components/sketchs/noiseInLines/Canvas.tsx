@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { createNoise2D } from "simplex-noise";
 import Random from "../../Random";
 import { mapRange } from "../../utils";
 import { debounce } from "../graphs/utils";
+import Options from "./Options";
 
 const params = {
   cols: 10,
@@ -18,6 +19,9 @@ const Canvas = (
     React.ClassAttributes<HTMLCanvasElement> &
     React.CanvasHTMLAttributes<HTMLCanvasElement>
 ) => {
+  const [cols, setCols] = useState(10);
+  const [rows, setRows] = useState(10);
+
   const canvasRef = useRef(null);
 
   const width: number = window.innerWidth;
@@ -28,8 +32,6 @@ const Canvas = (
   const draw: Function = (context: CanvasRenderingContext2D, frame: number) => {
     context.clearRect(0, 0, width, height);
 
-    const cols = params.cols;
-    const rows = params.rows;
     const numCells = cols * rows;
 
     const gridw = width;
@@ -116,15 +118,11 @@ const Canvas = (
     <>
       <div className="flex flex-row gap-2 z-50 mt-8">
         <Random setFunction={() => {}} />
-        {/*
+
         <Options
           numberOfStates={numberOfStates}
           handleSetNumberOfStates={handleSetNumberOfStates}
-          handleButtonNumberOfStates={handleButtonNumberOfStates}
-          numberOfStatesSignal={numberOfStatesSignal}
-          setNumberOfStatesSignal={setNumberOfStatesSignal}
         />
-        */}
       </div>
       <canvas
         ref={canvasRef}
